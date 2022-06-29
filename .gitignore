@@ -1,0 +1,7 @@
+.DS_Store
+/target
+package.json
+package-lock.json
+start.js
+uninstall.js
+pre-install.js
