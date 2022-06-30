@@ -4,8 +4,6 @@ use convert_case::{Case, Casing};
 /// create the package json matching specs for repo
 pub fn generate_package_json(package: &mut Package) -> String {
     let name: String = package.name.to_case(Case::Kebab);
-
-    // TODO: get keywords
     let keywords = package.keywords.join(",");
 
     format!(r#"
@@ -28,7 +26,7 @@ pub fn generate_package_json(package: &mut Package) -> String {
   }},
   "keywords": [{}],
   "author": "{}",
-  "license": "MIT",
+  "license": "{}",
   "bugs": {{
     "url": "{}/issues"
   }},
@@ -45,10 +43,11 @@ pub fn generate_package_json(package: &mut Package) -> String {
     name,
     package.version,
     package.description,
-    package.git_url,
+    package.repository,
     keywords,
     package.author,
-    package.git_url,
+    package.license,
+    package.repository,
     package.homepage
   )
 

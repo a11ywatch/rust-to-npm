@@ -41,4 +41,4 @@ See example project of library being used as a sidecar from rust into a [node pr
 
 ## TODO
 
-1. Get keywords from bin.
+1. Allow include local rust src files for non CLI type bins for easy `node_module` imports.

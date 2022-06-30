@@ -1,14 +1,18 @@
 extern crate convert_case;
+extern crate toml;
+extern crate serde_derive;
 
 pub mod generators;
 
 use crate::generators::{package, pre_install, start, uninstall};
-use std::fs::{File};
+use std::fs::{File, read_to_string};
 use std::io::prelude::*;
 use std::fs::OpenOptions;
 use std::process::Command;
+use std::path::Path;
+use serde_derive::Deserialize;
 
-#[derive(Default)]
+#[derive(Deserialize, Default)]
 /// package def for npm from cargo
 pub struct Package {
     /// the crate name
@@ -18,7 +22,7 @@ pub struct Package {
     /// description of the crate
     description: String,
     /// github repo url
-    git_url: String,
+    repository: String,
     /// keywords for crate
     keywords: Vec<String>,
     /// the author of the crate
@@ -53,23 +57,8 @@ fn main() {
     let mut start_file = ready_write_file(&start);
     let mut uninstall_file = ready_write_file(&uninstall);
 
-    let mut package: Package = Package::default();
-    const VERSION: &str = env!("CARGO_PKG_VERSION");
-    const NAME: &str = env!("CARGO_PKG_NAME");
-    const REPO: &str = env!("CARGO_PKG_REPOSITORY");
-    const AUTHORS: &str = env!("CARGO_PKG_AUTHORS");
-    const LICENSE: &str = env!("CARGO_PKG_LICENSE");
-    const DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");
-    const HOMEPAGE: &str = env!("CARGO_PKG_HOMEPAGE");
-
-    package.name = NAME.to_string();
-    package.version = VERSION.to_string();
-    package.git_url = REPO.to_string();
-    package.author = AUTHORS.to_string();
-    package.license = LICENSE.to_string();
-    package.description = DESCRIPTION.to_string();
-    package.homepage = HOMEPAGE.to_string();
-
+    let cargo_file: String = read_to_string(Path::new("./Cargo.toml")).unwrap().parse().unwrap();
+    let mut package: Package = toml::from_str(&cargo_file).unwrap_or_default();
     let name = package.name.clone();
     
     package_json_file.write_all(&package::generate_package_json(&mut package).as_bytes()).unwrap();

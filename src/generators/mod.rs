@@ -35,14 +35,14 @@ if (fs.existsSync(cargoDir)) {
     "#
 }
 
-/// generate .gitignore
-pub fn generate_git_ignore() -> &'static str  {
-    r#".DS_Store
-/target
-package.json
-package-lock.json
-start.js
-uninstall.js
-pre-install.js
-    "#
-}
+// /// generate .gitignore
+// pub fn generate_git_ignore() -> &'static str  {
+//     r#".DS_Store
+// /target
+// package.json
+// package-lock.json
+// start.js
+// uninstall.js
+// pre-install.js
+//     "#
+// }
