@@ -1,17 +1,20 @@
 [package]
+
 name = "rust-to-npm"
-version = "0.2.0"
+version = "0.1.8"
 edition = "2021"
 description = "ship a rust project to npm on all operating systems leveraging cargo."
-
 repository = "https://github.com/a11ywatch/rust-to-npm"
 readme = "README.md"
 keywords = ["rust-to-npm", "deploy-rust", "npm", "rust"]
 categories = ["command-line-utilities", "development-tools::build-utils"]
 license = "MIT"
+homepage = "https://github.com/a11ywatch/rust-to-npm"
+authors = ["Jeff Mendez"]
 
 [dependencies]
+
 convert_case = "0.5.0"
-serde = "1.0"
+serde = { version = "1", features=["derive"]}
 serde_derive = "1.0.137"
 toml = "0.5.9"
