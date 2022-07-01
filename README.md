@@ -34,7 +34,10 @@ If you want the package to be private make sure to have `private` set in your Ca
 Run the command inside the repo with the Cargo.toml file to deploy to [crates.io](https://crates.io/) and [npm](https://www.npmjs.com/).
 
 ```sh
+# to build and deploy to cargo + npm
 rust-to-npm
+# to build locally without deploying
+rust-to-npm no-deploy
 ```
 
 ### Consuming

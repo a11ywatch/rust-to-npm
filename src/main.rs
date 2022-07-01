@@ -5,13 +5,15 @@ extern crate serde_derive;
 pub mod generators;
 
 use crate::generators::{package, pre_install, start, uninstall};
+
 use std::fs::{File, read_to_string};
 use std::io::prelude::*;
 use std::fs::OpenOptions;
 use std::process::Command;
 use std::path::Path;
-use serde_derive::Deserialize;
 use std::env;
+
+use serde_derive::Deserialize;
 
 #[derive(Deserialize, Debug, Default)]
 /// package def for npm from cargo
@@ -56,7 +58,7 @@ fn ready_write_file(name: &str) -> File {
 
 /// convert a rust project to npm install cross compiled for all systems.
 fn main() {
-    println!("work in progress... issues may exist.");
+    println!("Building contents...");
 
     let package_json = "./package.json";
     let pre_install = "./pre-install.js";
@@ -84,6 +86,14 @@ fn main() {
     start_file.flush().unwrap();
     pre_install_file.flush().unwrap();
     uninstall_file.flush().unwrap();
+
+    let args: Vec<String> = env::args().collect();
+
+    println!("Finished creating modules for package.");
+
+    if args.len() == 2 && &args[1] == "no-deploy" {
+        return;
+    }
 
     Command::new("cargo")
         .args(["publish"])
