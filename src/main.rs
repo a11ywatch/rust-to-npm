@@ -95,6 +95,16 @@ fn main() {
         return;
     }
 
+    Command::new("git")
+        .args(["add", "."])
+        .status()
+        .expect("Failed to execute git add command");
+
+    Command::new("git")
+        .args(["commit", "-m", &format!("release: build v{}", &package_def.version)[..]])
+        .status()
+        .expect("Failed to execute git add command");
+
     Command::new("cargo")
         .args(["publish"])
         .status()
