@@ -103,7 +103,7 @@ fn main() {
     Command::new("git")
         .args(["commit", "-m", &format!("release: build v{}", &package_def.version)[..]])
         .status()
-        .expect("Failed to execute git add command");
+        .expect("Failed to execute git commit command");
 
     Command::new("cargo")
         .args(["publish"])
