@@ -23,15 +23,15 @@ pub struct Package {
     /// description of the crate
     description: String,
     /// github repo url
-    repository: String,
+    repository: Option<String>,
     /// keywords for crate
-    keywords: Vec<String>,
+    keywords: Option<Vec<String>>,
     /// the authors of the crate
-    authors: Vec<String>,
+    authors: Option<Vec<String>>,
     /// the package home page
-    homepage: String,
+    homepage: Option<String>,
     /// the license type
-    license: String,
+    license: Option<String>,
     /// publish
     publish: Option<bool>,
 }
@@ -77,6 +77,11 @@ fn main() {
     start_file.flush().unwrap();
     pre_install_file.flush().unwrap();
     uninstall_file.flush().unwrap();
+
+    Command::new("cargo")
+        .args(["publish"])
+        .status()
+        .expect("Failed to execute cargo publish command");
 
     if package.publish.unwrap_or(true) == false {
         println!("package created locally. Publishing will occur if repo is set to private on npm.");

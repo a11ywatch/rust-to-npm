@@ -28,7 +28,7 @@ dependencies = [
 
 [[package]]
 name = "rust-to-npm"
-version = "0.1.8"
+version = "0.2.6"
 dependencies = [
  "convert_case",
  "serde",
