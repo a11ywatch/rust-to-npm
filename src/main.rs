@@ -36,6 +36,14 @@ pub struct Package {
     publish: Option<bool>,
 }
 
+#[derive(Deserialize, Debug, Default)]
+/// the Cargo.toml def
+pub struct CargoToml {
+    /// the package
+    package: Package,
+}
+
+
 /// create or get a file ready for writting.
 fn ready_write_file(name: &str) -> File {
     OpenOptions::new()
@@ -63,12 +71,11 @@ fn main() {
     let cargo_toml = Path::new(&cargo_toml);
 
     let cargo_file: String = read_to_string(cargo_toml).unwrap();
-    let cargo_file: String = cargo_file.replace("[package]", ""); // pluck package from root to allow parsing
-    let mut package: Package = toml::from_str(&cargo_file).unwrap();
-    
-    let name = package.name.clone();
+    let cargo_toml: CargoToml = toml::from_str(&cargo_file).unwrap();
+    let mut package_def: Package = cargo_toml.package;
+    let name = package_def.name.clone();
      
-    package_json_file.write_all(&package::generate_package_json(&mut package).as_bytes()).unwrap();
+    package_json_file.write_all(&package::generate_package_json(&mut package_def).as_bytes()).unwrap();
     pre_install_file.write_all(&pre_install::generate_pre_install(&name).as_bytes()).unwrap();
     start_file.write_all(&start::generate_start(&name).as_bytes()).unwrap();
     uninstall_file.write_all(&uninstall::generate_uninstall(&name).as_bytes()).unwrap();
@@ -83,7 +90,7 @@ fn main() {
         .status()
         .expect("Failed to execute cargo publish command");
 
-    if package.publish.unwrap_or(true) == false {
+    if package_def.publish.unwrap_or(true) == false {
         println!("package created locally. Publishing will occur if repo is set to private on npm.");
         Command::new("npm")
             .args(["publish"])
