@@ -18,23 +18,23 @@ use serde_derive::Deserialize;
 #[derive(Deserialize, Debug, Default)]
 /// package def for npm from cargo
 pub struct Package {
-    /// the crate name
+    /// the package name
     name: String,
-    /// the version of the crate
+    /// the version of the package
     version: String,
-    /// description of the crate
-    description: String,
+    /// what the package is about.
+    description: Option<String>,
     /// github repo url
     repository: Option<String>,
-    /// keywords for crate
+    /// keywords for package
     keywords: Option<Vec<String>>,
-    /// the authors of the crate
+    /// the authors of the package
     authors: Option<Vec<String>>,
     /// the package home page
     homepage: Option<String>,
     /// the license type
     license: Option<String>,
-    /// publish
+    /// publish the package to crates.io and npm?
     publish: Option<bool>,
 }
 

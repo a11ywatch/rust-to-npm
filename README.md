@@ -53,6 +53,7 @@ You can also import the module directly at root as a normal module in js like `r
 
 ## Steps on how it works
 
+1. convert Cargo.toml to package.json equivalent.
 1. `pre-install` script that builds the rust project to the OS.
 1. `start` script that executes the binary easily in nodejs.
 1. `uninstall` script that removes the binary.

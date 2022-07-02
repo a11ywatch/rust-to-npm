@@ -3,14 +3,14 @@
 name = "rust-to-npm"
 version = "0.2.9"
 edition = "2021"
-description = "ship a rust project to npm on all operating systems leveraging cargo."
+description = "deploy a rust project to npm in one command."
 repository = "https://github.com/a11ywatch/rust-to-npm"
 readme = "README.md"
 keywords = ["rust-to-npm", "deploy-rust", "npm", "rust"]
 categories = ["command-line-utilities", "development-tools::build-utils"]
 license = "MIT"
 homepage = "https://github.com/a11ywatch/rust-to-npm"
-authors = ["Jeff Mendez"]
+authors = ["Jeff Mendez <jeff@a11ywatch.com>"]
 
 [dependencies]
 

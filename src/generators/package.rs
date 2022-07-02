@@ -9,6 +9,7 @@ pub fn generate_package_json(package: &mut Package) -> String {
     let license = package.license.clone().unwrap_or("ISC".to_string());
     let repository = package.repository.clone().unwrap_or("".to_string());
     let homepage = package.homepage.clone().unwrap_or("".to_string());
+    let description = package.description.clone().unwrap_or("".to_string());
 
     let authors = if authors.is_empty() {
       "".to_string()
@@ -34,11 +35,18 @@ pub fn generate_package_json(package: &mut Package) -> String {
   }},"#, repository)
     };
 
+    let description = if description.is_empty() {
+      println!("Description is optional on the Cargo.toml, but nice to add to let others know what the package is about.");
+      "".to_string()
+    } else {
+      format!(r#""description": "{}","#, description)
+    };
+
     format!(r#"
 {{
   "name": "{}",
   "version": "{}",
-  "description": "{}",
+  {}
   "main": "start.js",
   "directories": {{
     "test": "tests"
@@ -65,7 +73,7 @@ pub fn generate_package_json(package: &mut Package) -> String {
     "#, 
     name,
     package.version,
-    package.description,
+    description,
     repository,
     keywords,
     authors,
