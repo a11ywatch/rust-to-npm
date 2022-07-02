@@ -1,7 +1,7 @@
 [package]
 
 name = "rust-to-npm"
-version = "0.2.9"
+version = "0.2.10"
 edition = "2021"
 description = "deploy a rust project to npm in one command."
 repository = "https://github.com/a11ywatch/rust-to-npm"
