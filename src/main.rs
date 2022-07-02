@@ -1,8 +1,10 @@
 extern crate convert_case;
 extern crate toml;
 extern crate serde_derive;
+extern crate clap;
 
 pub mod generators;
+pub mod options;
 
 use crate::generators::{package, pre_install, start, uninstall};
 
@@ -12,8 +14,10 @@ use std::fs::OpenOptions;
 use std::process::Command;
 use std::path::Path;
 use std::env;
+use options::{Cli, Commands};
 
 use serde_derive::Deserialize;
+use clap::{Parser};
 
 #[derive(Deserialize, Debug, Default)]
 /// package def for npm from cargo
@@ -39,12 +43,11 @@ pub struct Package {
 }
 
 #[derive(Deserialize, Debug, Default)]
-/// the Cargo.toml def
+/// the Cargo.toml definition
 pub struct CargoToml {
     /// the package
     package: Package,
 }
-
 
 /// create or get a file ready for writting.
 fn ready_write_file(name: &str) -> File {
@@ -58,8 +61,9 @@ fn ready_write_file(name: &str) -> File {
 
 /// convert a rust project to npm install cross compiled for all systems.
 fn main() {
+    let cli = Cli::parse();
+    // if help option not ran can continue forward.
     println!("Building contents...");
-
     let package_json = "./package.json";
     let pre_install = "./pre-install.js";
     let uninstall = "./uninstall.js";
@@ -87,39 +91,45 @@ fn main() {
     pre_install_file.flush().unwrap();
     uninstall_file.flush().unwrap();
 
-    let args: Vec<String> = env::args().collect();
-
     println!("Finished creating modules for package.");
 
-    if args.len() == 2 && &args[1] == "no-deploy" {
-        return;
+    match &cli.command {
+        Some(Commands::BUILD { }) => {
+
+        },
+        Some(Commands::DEPLOY { }) => {
+            println!("Deploying to crates.io...");
+
+            Command::new("git")
+                .args(["add", "."])
+                .status()
+                .expect("Failed to execute git add command");
+    
+            Command::new("git")
+                .args(["commit", "-m", &format!("release: build v{}", &package_def.version)[..]])
+                .status()
+                .expect("Failed to execute git commit command");
+        
+            Command::new("cargo")
+                .args(["publish"])
+                .status()
+                .expect("Failed to execute cargo publish command");
+        
+            if package_def.publish.unwrap_or(true) == false {
+                println!("package created locally. Publishing will occur if repo is set to private on npm.");
+                Command::new("npm")
+                    .args(["publish"])
+                    .status()
+                    .expect("Failed to execute npm publish command");
+            } else {
+                println!("Deploying to npm...");
+                Command::new("npm")
+                    .args(["publish", "--access public"])
+                    .status()
+                    .expect("Failed to execute npm publish command");
+            }
+        },
+        None => {}
     }
 
-    Command::new("git")
-        .args(["add", "."])
-        .status()
-        .expect("Failed to execute git add command");
-
-    Command::new("git")
-        .args(["commit", "-m", &format!("release: build v{}", &package_def.version)[..]])
-        .status()
-        .expect("Failed to execute git commit command");
-
-    Command::new("cargo")
-        .args(["publish"])
-        .status()
-        .expect("Failed to execute cargo publish command");
-
-    if package_def.publish.unwrap_or(true) == false {
-        println!("package created locally. Publishing will occur if repo is set to private on npm.");
-        Command::new("npm")
-            .args(["publish"])
-            .status()
-            .expect("Failed to execute npm publish command");
-    } else {
-        Command::new("npm")
-            .args(["publish", "--access public"])
-            .status()
-            .expect("Failed to execute npm publish command");
-    }
 }

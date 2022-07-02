@@ -6,9 +6,9 @@ https://user-images.githubusercontent.com/8095978/176904499-ef3f5508-1143-491a-b
 
 ## Getting Started
 
-This project converts your rust project into a npm package that can be installed on all systems by leveraging cargo.
+Convert and deploy a rust application into a npm package that can be installed on all systems by leveraging cargo.
 
-You need to have a valid `name`, `version` and `description` set in your Cargo.toml and `license` if you want to deploy to crates.io.
+You need to have a valid `license` set if you want to deploy to crates.io (we may auto fill it in the future).
 
 ## Installation
 
@@ -34,9 +34,9 @@ Run the command inside the repo with the Cargo.toml file to deploy to [crates.io
 
 ```sh
 # to build and deploy to cargo + npm
-rust-to-npm
+rust-to-npm deploy
 # to build locally without deploying
-rust-to-npm no-deploy
+rust-to-npm build
 ```
 
 ### Consuming
