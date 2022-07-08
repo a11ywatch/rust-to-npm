@@ -1,23 +1,23 @@
-extern crate convert_case;
-extern crate toml;
-extern crate serde_derive;
 extern crate clap;
+extern crate convert_case;
+extern crate serde_derive;
+extern crate toml;
 
 pub mod generators;
 pub mod options;
 
 use crate::generators::{package, pre_install, start, uninstall};
 
-use std::fs::{File, read_to_string};
-use std::io::prelude::*;
-use std::fs::OpenOptions;
-use std::process::Command;
-use std::path::Path;
-use std::env;
 use options::{Cli, Commands};
+use std::env;
+use std::fs::OpenOptions;
+use std::fs::{read_to_string, File};
+use std::io::prelude::*;
+use std::path::Path;
+use std::process::Command;
 
+use clap::Parser;
 use serde_derive::Deserialize;
-use clap::{Parser};
 
 #[derive(Deserialize, Debug, Default)]
 /// package def for npm from cargo
@@ -80,11 +80,19 @@ fn main() {
     let cargo_toml: CargoToml = toml::from_str(&cargo_file).unwrap();
     let mut package_def: Package = cargo_toml.package;
     let name = package_def.name.clone();
-     
-    package_json_file.write_all(&package::generate_package_json(&mut package_def).as_bytes()).unwrap();
-    pre_install_file.write_all(&pre_install::generate_pre_install(&name).as_bytes()).unwrap();
-    start_file.write_all(&start::generate_start(&name).as_bytes()).unwrap();
-    uninstall_file.write_all(&uninstall::generate_uninstall(&name).as_bytes()).unwrap();
+
+    package_json_file
+        .write_all(&package::generate_package_json(&mut package_def).as_bytes())
+        .unwrap();
+    pre_install_file
+        .write_all(&pre_install::generate_pre_install(&name).as_bytes())
+        .unwrap();
+    start_file
+        .write_all(&start::generate_start(&name).as_bytes())
+        .unwrap();
+    uninstall_file
+        .write_all(&uninstall::generate_uninstall(&name).as_bytes())
+        .unwrap();
 
     package_json_file.flush().unwrap();
     start_file.flush().unwrap();
@@ -94,27 +102,29 @@ fn main() {
     println!("Finished creating modules for package.");
 
     match &cli.command {
-        Some(Commands::BUILD { }) => {
-
-        },
-        Some(Commands::DEPLOY { }) => {
+        Some(Commands::BUILD {}) => {}
+        Some(Commands::DEPLOY {}) => {
             println!("Deploying to crates.io...");
 
             Command::new("git")
                 .args(["add", "."])
                 .status()
                 .expect("Failed to execute git add command");
-    
+
             Command::new("git")
-                .args(["commit", "-m", &format!("release: build v{}", &package_def.version)[..]])
+                .args([
+                    "commit",
+                    "-m",
+                    &format!("release: build v{}", &package_def.version)[..],
+                ])
                 .status()
                 .expect("Failed to execute git commit command");
-        
+
             Command::new("cargo")
                 .args(["publish"])
                 .status()
                 .expect("Failed to execute cargo publish command");
-        
+
             if package_def.publish.unwrap_or(true) == false {
                 println!("package created locally. Publishing will occur if repo is set to private on npm.");
                 Command::new("npm")
@@ -128,8 +138,7 @@ fn main() {
                     .status()
                     .expect("Failed to execute npm publish command");
             }
-        },
+        }
         None => {}
     }
-
 }

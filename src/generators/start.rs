@@ -1,6 +1,7 @@
 /// create the uninstall script for the repo
-pub fn generate_start(name: &String) -> String  {
-    format!(r#"#!/usr/bin/env node
+pub fn generate_start(name: &String) -> String {
+    format!(
+        r#"#!/usr/bin/env node
 
 const {{ exec }} = require("child_process");
 
@@ -11,5 +12,6 @@ exec("{name}", (error, stdout, stderr) => {{
     console.log(`exec error: ${{error}}`);
   }}
 }});    
-    "#)
+    "#
+    )
 }

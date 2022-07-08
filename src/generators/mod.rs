@@ -4,7 +4,7 @@ pub mod start;
 pub mod uninstall;
 
 /// start the install scripts
-pub fn generate_installs() -> &'static str  {
+pub fn generate_installs() -> &'static str {
     r#"#!/usr/bin/env node
 
 const fs = require("fs");

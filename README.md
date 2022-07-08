@@ -10,25 +10,31 @@ Convert and deploy a rust application into a npm package that can be installed o
 
 You need to have a valid `license` set if you want to deploy to crates.io (we may auto fill it in the future).
 
+A valid C compiler is also required to build the crate. By default most linux distros and mac have one installed.
+
+Example on ChromeOS:
+
+```sh
+sudo apt update && apt upgrade
+sudo apt install build-essential software-properties-common gcc g++
+```
+
+You may want to add the following to your `.gitignore` and just reference the project being made with.
+
+```sh
+package.json
+start.js
+uninstall.js
+pre-install.js
+```
+
 ## Installation
 
 ```sh
 cargo install rust-to-npm
 ```
 
-You may want to add the following to your .gitignore and just reference the project being made with.
-
-```sh
-package.json
-package-lock.json
-start.js
-uninstall.js
-pre-install.js
-```
-
 ## Usage
-
-If you want the package to be private make sure to have `private` set in your Cargo.toml file.
 
 Run the command inside the repo with the Cargo.toml file to deploy to [crates.io](https://crates.io/) and [npm](https://www.npmjs.com/).
 

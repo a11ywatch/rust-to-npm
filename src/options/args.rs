@@ -1,5 +1,5 @@
-use clap::{Parser};
 use crate::options::sub_command::Commands;
+use clap::Parser;
 
 /// deploy rust projects to npm with ease.
 #[derive(Parser)]
@@ -7,5 +7,5 @@ use crate::options::sub_command::Commands;
 pub struct Cli {
     /// main program commands
     #[clap(subcommand)]
-    pub command: Option<Commands>
+    pub command: Option<Commands>,
 }
