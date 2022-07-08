@@ -18,7 +18,7 @@ cargo install rust-to-npm
 
 You may want to add the following to your .gitignore and just reference the project being made with.
 
-```
+```sh
 package.json
 package-lock.json
 start.js

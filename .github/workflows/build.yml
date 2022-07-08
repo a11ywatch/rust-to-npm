@@ -1,0 +1,14 @@
+name: Build and Test
+on: [push]
+jobs:
+  run-container:
+    name: End to End
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: "Install Crate"
+        run: cargo install  --path .
+      - name: "Run rust-to-npm"
+        run: rust-to-npm build
+      - name: "Test npm output"
+        run: cat ./package.json
