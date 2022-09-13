@@ -72,7 +72,7 @@ Here is an example of the output from the Cargo.toml to package.json file in the
 [package]
 
 name = "rust-to-npm"
-version = "0.2.9"
+version = "0.3.2"
 edition = "2021"
 description = "ship a rust project to npm on all operating systems leveraging cargo."
 repository = "https://github.com/a11ywatch/rust-to-npm"
@@ -94,7 +94,7 @@ toml = "0.5.9"
 ```json
 {
   "name": "rust-to-npm",
-  "version": "0.2.9",
+  "version": "0.3.2",
   "description": "ship a rust project to npm on all operating systems leveraging cargo.",
   "main": "start.js",
   "directories": {
