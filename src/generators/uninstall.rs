@@ -8,7 +8,7 @@ const binp = path.join(cargoDir, "bin", "{name}");
 
 if (fs.existsSync(binp)) {{
   console.log("Uninstalling {name}...");
-  exec(`cargo uninstall a11ywatch_cli`, (error, stdout, stderr) => {{
+  exec(`cargo uninstall {name}`, (error, stdout, stderr) => {{
     console.log(stdout);
     if (error || stderr) {{
       console.log(error || stderr);
