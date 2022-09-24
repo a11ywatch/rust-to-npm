@@ -85,7 +85,7 @@ fn main() {
         .write_all(&package::generate_package_json(&mut package_def).as_bytes())
         .unwrap();
     pre_install_file
-        .write_all(&pre_install::generate_pre_install(&name).as_bytes())
+        .write_all(&pre_install::generate_pre_install(&name, &package_def.version).as_bytes())
         .unwrap();
     start_file
         .write_all(&start::generate_start(&name).as_bytes())
