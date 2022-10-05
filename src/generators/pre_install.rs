@@ -4,8 +4,6 @@ pub use super::generate_installs;
 pub fn generate_pre_install(name: &String, version: &String) -> String {
     format!(
         r#"{}
-const binp = path.join(cargoDir, "bin", "{name}");
-
 const features = process.env.npm_config_features ? `--features ${{process.env.npm_config_features.replace(",", " ")}}` : ""; 
 
 console.log(`Installing and compiling {name} {version} ${{features}} ...`);

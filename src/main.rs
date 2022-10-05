@@ -59,11 +59,22 @@ fn ready_write_file(name: &str) -> File {
         .expect("Unable to open {name}")
 }
 
-/// convert a rust project to npm install cross compiled for all systems.
-fn main() {
-    let cli = Cli::parse();
-    // if help option not ran can continue forward.
+/// convert Cargo.toml to Package structure
+fn get_package_def() -> Package {
+    let cargo_toml = format!("{}{}", env::current_dir().unwrap().display(), "/Cargo.toml");
+    let cargo_toml = Path::new(&cargo_toml);
+
+    let cargo_file: String = read_to_string(cargo_toml).unwrap();
+    let cargo_toml: CargoToml = toml::from_str(&cargo_file).unwrap();
+    let package_def: Package = cargo_toml.package;
+
+    package_def
+}
+
+/// create npm package contents based off Cargo.toml
+fn create_package(npm_package_name: &Option<String>) -> Package {
     println!("Building contents...");
+    // npm package scripts
     let package_json = "./package.json";
     let pre_install = "./pre-install.js";
     let uninstall = "./uninstall.js";
@@ -79,8 +90,12 @@ fn main() {
     let cargo_file: String = read_to_string(cargo_toml).unwrap();
     let cargo_toml: CargoToml = toml::from_str(&cargo_file).unwrap();
     let mut package_def: Package = cargo_toml.package;
-    let name = package_def.name.clone();
 
+    let name = package_def.name.clone();
+    let pkg_name = npm_package_name.as_ref().unwrap_or(&name);
+    
+    package_def.name = pkg_name.to_string();
+    
     package_json_file
         .write_all(&package::generate_package_json(&mut package_def).as_bytes())
         .unwrap();
@@ -101,10 +116,23 @@ fn main() {
 
     println!("Finished creating modules for package.");
 
+    package_def
+}
+
+/// convert a rust project to npm install cross compiled for all systems.
+fn main() {
+    let cli = Cli::parse();
+
     match &cli.command {
-        Some(Commands::BUILD {}) => {}
-        Some(Commands::DEPLOY {}) => {
-            println!("Deploying to crates.io...");
+        Some(Commands::BUILD {
+            npm_package_name
+        }) => {
+            create_package(npm_package_name);
+        }
+        Some(Commands::DEPLOY { build, npm_package_name }) => {
+            let package_def = if *build {
+                create_package(npm_package_name)
+            } else { get_package_def() };
 
             Command::new("git")
                 .args(["add", "."])
@@ -120,6 +148,7 @@ fn main() {
                 .status()
                 .expect("Failed to execute git commit command");
 
+            println!("Deploying to crates.io...");
             Command::new("cargo")
                 .args(["publish"])
                 .status()

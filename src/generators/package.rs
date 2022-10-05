@@ -56,8 +56,7 @@ pub fn generate_package_json(package: &mut Package) -> String {
     };
 
     format!(
-        r#"
-{{
+        r#"{{
   "name": "{}",
   "version": "{}",
   {}

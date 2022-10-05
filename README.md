@@ -39,11 +39,13 @@ cargo install rust-to-npm
 Run the command inside the repo with the Cargo.toml file to deploy to [crates.io](https://crates.io/) and [npm](https://www.npmjs.com/).
 
 ```sh
-# to build and deploy to cargo + npm
-rust-to-npm deploy
 # to build locally without deploying
 rust-to-npm build
+# to build and deploy to cargo + npm
+rust-to-npm deploy -b
 ```
+
+You can also pass in the `-n` option on `build & deploy` in order to use a custom npm package name ex: `rust-to-npm build -n @a11ywatch/rust-to-npm`
 
 ### Consuming
 
@@ -73,7 +75,7 @@ Here is an example of the output from the Cargo.toml to package.json file in the
 [package]
 
 name = "rust-to-npm"
-version = "0.3.5"
+version = "0.3.7"
 edition = "2021"
 description = "ship a rust project to npm on all operating systems leveraging cargo."
 repository = "https://github.com/a11ywatch/rust-to-npm"
@@ -95,7 +97,7 @@ toml = "0.5.9"
 ```json
 {
   "name": "rust-to-npm",
-  "version": "0.3.5",
+  "version": "0.3.7",
   "description": "ship a rust project to npm on all operating systems leveraging cargo.",
   "main": "start.js",
   "directories": {
@@ -139,3 +141,4 @@ We use this project to publish to npm as well.
 
 1. Allow include local rust src files for non CLI bins for easy `node_module` imports like the crawler project.
 1. Add custom NPM package name ability.
+1. pkill process on shutdown signal `start.js`
