@@ -6,8 +6,10 @@ pub fn generate_pre_install(name: &String, version: &String) -> String {
         r#"{}
 const binp = path.join(cargoDir, "bin", "{name}");
 
-console.log("Installing and compiling {name} {version}...");
-exec(`cargo install {name} --vers {version}`, (error, stdout, stderr) => {{
+const features = process.env.npm_config_features ? `--features ${{process.env.npm_config_features.replace(",", " ")}}` : ""; 
+
+console.log(`Installing and compiling {name} {version} ${{features}} ...`);
+exec(`cargo install {name} --vers {version} ${{features}}`, (error, stdout, stderr) => {{
   console.log(stdout);
   if (error || stderr) {{
     console.log(error || stderr);

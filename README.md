@@ -47,10 +47,11 @@ rust-to-npm build
 
 ### Consuming
 
-To use the node_module you just published run `npm i $PACKAGE_NAME`.
+To use the node_module you just published run `npm i $PACKAGE_NAME --features=somefeature,nextfeature`.
 
 Then use it via node `node node_modules/$PACKAGE_NAME/start.js`. Replace `$PACKAGE_NAME` with your package name as kebab case.
 You can also import the module directly at root as a normal module in js like `require("node_modules/$PACKAGE_NAME")`.
+The features arg is an optional comma seperated list to use for cargo.
 
 ## Goals
 
@@ -72,7 +73,7 @@ Here is an example of the output from the Cargo.toml to package.json file in the
 [package]
 
 name = "rust-to-npm"
-version = "0.3.2"
+version = "0.3.5"
 edition = "2021"
 description = "ship a rust project to npm on all operating systems leveraging cargo."
 repository = "https://github.com/a11ywatch/rust-to-npm"
@@ -94,7 +95,7 @@ toml = "0.5.9"
 ```json
 {
   "name": "rust-to-npm",
-  "version": "0.3.2",
+  "version": "0.3.5",
   "description": "ship a rust project to npm on all operating systems leveraging cargo.",
   "main": "start.js",
   "directories": {
@@ -137,3 +138,4 @@ We use this project to publish to npm as well.
 ## TODO
 
 1. Allow include local rust src files for non CLI bins for easy `node_module` imports like the crawler project.
+1. Add custom NPM package name ability.
