@@ -6,6 +6,7 @@ pub fn generate_start(name: &String) -> String {
 const {{ exec }} = require("child_process");
 
 const controller = new AbortController();
+const {{ signal }} = controller;
 
 exec("{name}", {{ signal }}, (error, stdout, stderr) => {{
   stdout && console.log(stdout);
