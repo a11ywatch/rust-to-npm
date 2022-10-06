@@ -5,13 +5,19 @@ pub fn generate_start(name: &String) -> String {
 
 const {{ exec }} = require("child_process");
 
-exec("{name}", (error, stdout, stderr) => {{
+const controller = new AbortController();
+
+exec("{name}", {{ signal }}, (error, stdout, stderr) => {{
   stdout && console.log(stdout);
-  stderr && console.log(stderr);
+  stderr && console.error(stderr);
   if (error !== null) {{
     console.log(`exec error: ${{error}}`);
   }}
-}});    
+}});
+
+process.on("SIGTERM", () => {{
+  controller.abort();
+}});
     "#
     )
 }
