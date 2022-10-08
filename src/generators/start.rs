@@ -5,7 +5,7 @@ pub fn generate_start(name: &String) -> String {
 
 const {{ exec }} = require("child_process");
 
-const controller = new AbortController();
+const controller = typeof AbortController !== "undefined" ? new AbortController() : {{ abort: () => {{}} }};
 const {{ signal }} = controller;
 
 exec("{name}", {{ signal }}, (error, stdout, stderr) => {{
