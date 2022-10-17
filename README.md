@@ -66,8 +66,6 @@ The features arg is an optional comma seperated list to use for cargo.
 1. `pre-install` script that builds the rust project to the OS.
 1. `start` script that executes the binary easily in nodejs.
 1. `uninstall` script that removes the binary.
-1. [TODO] send all rust files that build the project without need for `crate`.
-   We have this working on another project, plan is to make this optional between `crate` installs or local for size.
 
 Here is an example of the output from the Cargo.toml to package.json file in the repo.
 
@@ -129,6 +127,11 @@ toml = "0.5.9"
 }
 ```
 
+## Options
+
+Run the CLI with `--npm_package_name` in order to add a custom package name for npm to use ( good for org packages ).
+Use `--source` for shipping and compiling the project from source code.
+
 ## About
 
 This project is used to convert the rust [A11yWatch CLI](https://github.com/A11yWatch/a11ywatch) for usage in node.
@@ -136,9 +139,3 @@ This project is used to convert the rust [A11yWatch CLI](https://github.com/A11y
 See example usage converting the [rust crawler](https://github.com/A11yWatch/crawler) library as a sidecar into a [node project](https://github.com/A11yWatch/sidecar).
 
 We use this project to publish to npm as well.
-
-## TODO
-
-1. Allow include local rust src files for non CLI bins for easy `node_module` imports like the crawler project.
-1. Add custom NPM package name ability.
-1. pkill process on shutdown signal `start.js`

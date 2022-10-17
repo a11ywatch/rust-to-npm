@@ -6,7 +6,10 @@ pub enum Commands {
     BUILD {
         /// custom npm package name ex: @myorg/project
         #[clap(short, long)]
-        npm_package_name: Option<String>
+        npm_package_name: Option<String>,
+        /// source mode - includes all project files
+        #[clap(short, long)]
+        source: bool,
     },
     /// Build and deploy the project to crates.io and npm.
     DEPLOY {
@@ -15,6 +18,9 @@ pub enum Commands {
         build: bool,
         /// custom npm package name ex: @myorg/project
         #[clap(short, long)]
-        npm_package_name: Option<String>
+        npm_package_name: Option<String>,
+        /// source mode - includes all project files
+        #[clap(short, long)]
+        source: bool,
     },
 }
