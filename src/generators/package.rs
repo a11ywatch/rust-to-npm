@@ -2,7 +2,7 @@ use crate::Package;
 use convert_case::{Case, Casing};
 
 /// create the package json matching specs for repo
-pub fn generate_package_json(package: &mut Package) -> String {
+pub fn generate_package_json(package: &mut Package, source: &bool) -> String {
     let name: String = package.name.to_case(Case::Kebab);
     let keywords = package
         .keywords
@@ -29,9 +29,10 @@ pub fn generate_package_json(package: &mut Package) -> String {
         "".to_string()
     } else {
         format!(
-            r#""bugs": {{
+            r#",
+  "bugs": {{
     "url": "{}/issues"
-  }},"#,
+  }}"#,
             repository
         )
     };
@@ -40,7 +41,8 @@ pub fn generate_package_json(package: &mut Package) -> String {
         "".to_string()
     } else {
         format!(
-            r#""repository": {{
+            r#"
+  "repository": {{
     "type": "git",
     "url": "{}.git"
   }},"#,
@@ -53,6 +55,39 @@ pub fn generate_package_json(package: &mut Package) -> String {
         "".to_string()
     } else {
         format!(r#""description": "{}","#, description)
+    };
+
+    let files = if source == &true {
+        ""
+    } else {
+        r#",
+  "files": [
+    "pre-install.js",
+    "start.js",
+    "uninstall.js",
+    "README.md",
+    "LICENSE"
+  ]"#
+    };
+
+    let homepage = if homepage.is_empty() {
+        "".to_string()
+    } else {
+        format!(
+            r#",
+  "homepage": "{}""#,
+            homepage
+        )
+    };
+
+    let license = if license.is_empty() {
+        "".to_string()
+    } else {
+        format!(
+            r#"
+  "license": "{}""#,
+            license
+        )
     };
 
     format!(
@@ -68,22 +103,20 @@ pub fn generate_package_json(package: &mut Package) -> String {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "node ./pre-install.js",
     "uninstall": "node ./uninstall.js"
-  }},
-  {}
+  }},{}
   "keywords": [{}],
-  {}
-  "license": "{}",
-  {}
-  "homepage": "{}",
-  "files": [
-    "pre-install.js",
-    "start.js",
-    "uninstall.js",
-    "README.md",
-    "LICENSE"
-  ]
+  {}{}{}{}{}
 }}
     "#,
-        name, package.version, description, repository, keywords, authors, license, bugs, homepage
+        name,
+        package.version,
+        description,
+        repository,
+        keywords,
+        authors,
+        license,
+        bugs,
+        homepage,
+        files
     )
 }

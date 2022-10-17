@@ -72,7 +72,7 @@ fn get_package_def() -> Package {
 }
 
 /// create npm package contents based off Cargo.toml
-fn create_package(npm_package_name: &Option<String>) -> Package {
+fn create_package(npm_package_name: &Option<String>, source: &bool) -> Package {
     println!("Building contents...");
     // npm package scripts
     let package_json = "./package.json";
@@ -84,6 +84,7 @@ fn create_package(npm_package_name: &Option<String>) -> Package {
     let mut pre_install_file = ready_write_file(&pre_install);
     let mut start_file = ready_write_file(&start);
     let mut uninstall_file = ready_write_file(&uninstall);
+
     let cargo_toml = format!("{}{}", env::current_dir().unwrap().display(), "/Cargo.toml");
     let cargo_toml = Path::new(&cargo_toml);
 
@@ -93,14 +94,16 @@ fn create_package(npm_package_name: &Option<String>) -> Package {
 
     let name = package_def.name.clone();
     let pkg_name = npm_package_name.as_ref().unwrap_or(&name);
-    
+
     package_def.name = pkg_name.to_string();
-    
+
     package_json_file
-        .write_all(&package::generate_package_json(&mut package_def).as_bytes())
+        .write_all(&package::generate_package_json(&mut package_def, source).as_bytes())
         .unwrap();
     pre_install_file
-        .write_all(&pre_install::generate_pre_install(&name, &package_def.version).as_bytes())
+        .write_all(
+            &pre_install::generate_pre_install(&pkg_name, &package_def.version, source).as_bytes(),
+        )
         .unwrap();
     start_file
         .write_all(&start::generate_start(&name).as_bytes())
@@ -125,14 +128,21 @@ fn main() {
 
     match &cli.command {
         Some(Commands::BUILD {
-            npm_package_name
+            source,
+            npm_package_name,
         }) => {
-            create_package(npm_package_name);
+            create_package(npm_package_name, source);
         }
-        Some(Commands::DEPLOY { build, npm_package_name }) => {
+        Some(Commands::DEPLOY {
+            source,
+            build,
+            npm_package_name,
+        }) => {
             let package_def = if *build {
-                create_package(npm_package_name)
-            } else { get_package_def() };
+                create_package(npm_package_name, source)
+            } else {
+                get_package_def()
+            };
 
             Command::new("git")
                 .args(["add", "."])
