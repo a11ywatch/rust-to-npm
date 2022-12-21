@@ -1,5 +1,4 @@
 extern crate clap;
-extern crate convert_case;
 extern crate serde_derive;
 extern crate toml;
 

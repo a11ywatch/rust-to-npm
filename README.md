@@ -78,7 +78,7 @@ Here is an example of the output from the Cargo.toml to package.json file in the
 [package]
 
 name = "rust-to-npm"
-version = "0.4.2"
+version = "0.4.3"
 edition = "2021"
 description = "ship a rust project to npm on all operating systems leveraging cargo."
 repository = "https://github.com/a11ywatch/rust-to-npm"
@@ -91,7 +91,6 @@ authors = ["Jeff Mendez"]
 
 [dependencies]
 
-convert_case = "0.5.0"
 serde = { version = "1", features=["derive"]}
 serde_derive = "1.0.137"
 toml = "0.5.9"
@@ -100,7 +99,7 @@ toml = "0.5.9"
 ```json
 {
   "name": "rust-to-npm",
-  "version": "0.3.7",
+  "version": "0.4.3",
   "description": "ship a rust project to npm on all operating systems leveraging cargo.",
   "main": "start.js",
   "directories": {
