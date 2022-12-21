@@ -91,7 +91,6 @@ authors = ["Jeff Mendez"]
 
 [dependencies]
 
-convert_case = "0.5.0"
 serde = { version = "1", features=["derive"]}
 serde_derive = "1.0.137"
 toml = "0.5.9"
