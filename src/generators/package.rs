@@ -1,9 +1,7 @@
 use crate::Package;
-use convert_case::{Case, Casing};
 
 /// create the package json matching specs for repo
 pub fn generate_package_json(package: &mut Package, source: &bool) -> String {
-    let name: String = package.name.to_case(Case::Kebab);
     let keywords = package
         .keywords
         .clone()
@@ -108,7 +106,7 @@ pub fn generate_package_json(package: &mut Package, source: &bool) -> String {
   {}{}{}{}{}
 }}
     "#,
-        name,
+        package.name,
         package.version,
         description,
         repository,

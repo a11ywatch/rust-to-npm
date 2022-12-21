@@ -166,7 +166,7 @@ dependencies = [
 
 [[package]]
 name = "rust-to-npm"
-version = "0.4.1"
+version = "0.4.2"
 dependencies = [
  "clap",
  "convert_case",
