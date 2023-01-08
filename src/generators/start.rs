@@ -17,7 +17,11 @@ exec("{name}", {{ signal }}, (error, stdout, stderr) => {{
 }});
 
 process.on("SIGTERM", () => {{
-  controller.abort();
+  controller && controller.abort();
+}});
+
+process.on("SIGINT", () => {{
+  controller && controller.abort();
 }});
     "#
     )
