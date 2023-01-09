@@ -101,7 +101,7 @@ fn create_package(npm_package_name: &Option<String>, source: &bool) -> Package {
         .unwrap();
     pre_install_file
         .write_all(
-            &pre_install::generate_pre_install(&pkg_name, &package_def.version, source).as_bytes(),
+            &pre_install::generate_pre_install(&name, &package_def.version, source).as_bytes(),
         )
         .unwrap();
     start_file
