@@ -1,12 +1,12 @@
 # rust-to-npm
 
-Deploy a rust project to crates.io and npm in one command.
+Deploy a Rust project to crates.io and npm in one command.
 
 https://user-images.githubusercontent.com/8095978/176904499-ef3f5508-1143-491a-bf76-8f240e8b61fb.mov
 
 ## Getting Started
 
-Convert and deploy a rust application into a npm package that can be installed on all systems by leveraging cargo.
+Convert and deploy a [Rust](https://www.rust-lang.org) application into a npm package that can be installed on all systems by leveraging cargo.
 
 You need to have a valid `license` set if you want to deploy to crates.io (we may auto fill it in the future).
 
@@ -138,8 +138,6 @@ Use `--source` for shipping and compiling the project from source code.
 
 ## About
 
-This project is used to convert the rust [A11yWatch CLI](https://github.com/A11yWatch/a11ywatch) for usage in node.
+This project is used to convert the [A11yWatch CLI](https://github.com/a11ywatch/a11ywatch) for usage in node.
 
-See example usage converting the [rust crawler](https://github.com/A11yWatch/crawler) library as a sidecar into a [node project](https://github.com/A11yWatch/sidecar).
-
-We use this project to publish to npm as well.
+See example usage converting the [rust crawler](https://github.com/a11ywatch/crawler) library as a sidecar into a [node project](https://github.com/a11ywatch/sidecar).
