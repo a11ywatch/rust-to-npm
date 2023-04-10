@@ -10,8 +10,9 @@ pub fn generate_installs() -> &'static str {
 const fs = require("fs");
 const path = require("path");
 const { exec } = require("child_process");
+const { homedir } = require("os");
 
-const cargoDir = path.dirname("$HOME" + ".cargo");
+const cargoDir = path.join(homedir(), ".cargo");
 
 // check if directory exists
 if (fs.existsSync(cargoDir)) {
