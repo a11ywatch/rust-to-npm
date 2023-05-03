@@ -1,4 +1,4 @@
-# rust-to-npm
+# rust-to-npm-cli
 
 Deploy a Rust project to crates.io and npm in one command.
 
@@ -34,10 +34,12 @@ Installs can be handled with cargo or npm using the following:
 
 ```sh
 # install with cargo
-cargo install rust-to-npm
+cargo install rust-to-npm-cli
 # install with npm
-npm i rust-to-npm -g
+npm i rust-to-npm-cli -g
 ```
+
+You can also use the crate directly at [rust-to-npm](./rust-to-npm/) with `cargo install rust-to-npm`.
 
 ## Usage
 
@@ -45,12 +47,12 @@ Run the command inside the repo with the Cargo.toml file to deploy to [crates.io
 
 ```sh
 # to build locally without deploying
-rust-to-npm build
+rust-to-npm-cli build
 # to build and deploy to cargo + npm
-rust-to-npm deploy -b
+rust-to-npm-cli deploy -b
 ```
 
-You can also pass in the `-n` option on `build & deploy` in order to use a custom npm package name ex: `rust-to-npm build -n @myorg/rust-to-npm`
+You can also pass in the `-n` option on `build & deploy` in order to use a custom npm package name ex: `rust-to-npm-cli build -n @myorg/rust-to-npm-cli`
 
 ### Consuming
 
@@ -77,13 +79,13 @@ Here is an example of the output from the Cargo.toml to package.json file in the
 ```toml
 [package]
 
-name = "rust-to-npm"
-version = "0.4.3"
+name = "rust-to-npm-cli"
+version = "0.4.10"
 edition = "2021"
 description = "ship a rust project to npm on all operating systems leveraging cargo."
 repository = "https://github.com/a11ywatch/rust-to-npm"
 readme = "README.md"
-keywords = ["rust-to-npm", "deploy-rust", "npm", "rust"]
+keywords = ["rust-to-npm-cli", "deploy-rust", "npm", "rust"]
 categories = ["command-line-utilities", "development-tools::build-utils"]
 license = "MIT"
 homepage = "https://github.com/a11ywatch/rust-to-npm"
@@ -98,8 +100,8 @@ toml = "0.5.9"
 
 ```json
 {
-  "name": "rust-to-npm",
-  "version": "0.4.3",
+  "name": "rust-to-npm-cli",
+  "version": "0.4.10",
   "description": "ship a rust project to npm on all operating systems leveraging cargo.",
   "main": "start.js",
   "directories": {
@@ -112,15 +114,15 @@ toml = "0.5.9"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/a11ywatch/rust-to-npm.git"
+    "url": "https://github.com/a11ywatch/rust-to-npm-cli.git"
   },
-  "keywords": ["rust-to-npm", "deploy-rust", "npm", "rust"],
+  "keywords": ["rust-to-npm-cli", "deploy-rust", "npm", "rust"],
   "author": "Jeff Mendez",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/a11ywatch/rust-to-npm/issues"
+    "url": "https://github.com/a11ywatch/rust-to-npm-cli/issues"
   },
-  "homepage": "https://github.com/a11ywatch/rust-to-npm",
+  "homepage": "https://github.com/a11ywatch/rust-to-npm-cli",
   "files": [
     "pre-install.js",
     "start.js",
