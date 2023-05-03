@@ -8,18 +8,10 @@ https://user-images.githubusercontent.com/8095978/176904499-ef3f5508-1143-491a-b
 
 Convert and deploy a [Rust](https://www.rust-lang.org) application into a npm package that can be installed on all systems by leveraging cargo.
 
-You need to have a valid `license` set if you want to deploy to crates.io (we may auto fill it in the future).
-
-A valid C compiler is also required to build the crate. By default most linux distros and mac have one installed.
-
-Example on ChromeOS:
-
-```sh
-sudo apt update && apt upgrade
-sudo apt install build-essential software-properties-common gcc g++
-```
-
+A valid `license` set if you want to deploy to crates.io (we may auto fill it in the future).
 You may want to add the following to your `.gitignore` and just reference the project being made with.
+
+For shipping projects to github and releasing with binary installs check out the [cargo-dist](https://github.com/axodotdev/cargo-dist) project.
 
 ```sh
 package.json
