@@ -33,6 +33,20 @@ npm i rust-to-npm-cli -g
 
 You can also use the crate directly at [rust-to-npm](./rust-to-npm/) with `cargo install rust-to-npm`.
 
+## Account Login
+
+The cargo crates and npm packages you are deploying should be linked to an account for their respective package managers.
+
+Login to your crates.io account:
+```sh
+cargo login
+```
+
+Login to your npm account:
+```sh
+npm adduser
+```
+
 ## Usage
 
 Run the command inside the repo with the Cargo.toml file to deploy to [crates.io](https://crates.io/) and [npm](https://www.npmjs.com/).
