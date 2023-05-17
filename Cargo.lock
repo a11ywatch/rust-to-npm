@@ -157,7 +157,7 @@ dependencies = [
 
 [[package]]
 name = "rust-to-npm"
-version = "0.4.10"
+version = "0.4.12"
 dependencies = [
  "serde",
  "serde_derive",
@@ -166,7 +166,7 @@ dependencies = [
 
 [[package]]
 name = "rust-to-npm-cli"
-version = "0.4.10"
+version = "0.4.12"
 dependencies = [
  "clap",
  "rust-to-npm",
