@@ -1,4 +1,4 @@
-# rust-to-npm-cli
+# rust-to-npm
 
 Deploy a Rust project to crates.io and npm in one command.
 
