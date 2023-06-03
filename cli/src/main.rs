@@ -51,7 +51,7 @@ fn main() {
                 .status()
                 .expect("Failed to execute cargo publish command");
 
-            if package_def.publish.unwrap_or(true) == false {
+            if package_def.publish.is_some() && package_def.publish.unwrap_or(true) == false {
                 println!("package created locally. Publishing will occur if repo is set to private on npm.");
                 Command::new("npm")
                     .args(["publish"])
