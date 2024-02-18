@@ -11,14 +11,13 @@ Convert and deploy a [Rust](https://www.rust-lang.org) application into a npm pa
 A valid `license` set if you want to deploy to crates.io (we may auto fill it in the future).
 You may want to add the following to your `.gitignore` and just reference the project being made with.
 
-For shipping projects to github and releasing with binary installs check out the [cargo-dist](https://github.com/axodotdev/cargo-dist) project.
-
 ```sh
 package.json
 start.js
 uninstall.js
 pre-install.js
 ```
+
 
 ## Installation
 
@@ -149,3 +148,5 @@ Use `--source` for shipping and compiling the project from source code.
 This project is used to convert the [A11yWatch CLI](https://github.com/a11ywatch/a11ywatch) for usage in node.
 
 See example usage converting the [rust crawler](https://github.com/a11ywatch/crawler) library as a sidecar into a [node project](https://github.com/a11ywatch/sidecar).
+
+For shipping projects to github and releasing with binary installs check out the [cargo-dist](https://github.com/axodotdev/cargo-dist) project.
